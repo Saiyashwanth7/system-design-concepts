@@ -1,12 +1,14 @@
 FROM python:3.12-slim
 
-# Set working directory
-WORKDIR /app
+WORKDIR /app1
 
-# Install dependencies first (leverages Docker caching)
+# Copy requirements file
 COPY requirements.txt .
-
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
-COPY . .
+# Copy everything from current folder into /app1
+COPY . /app1/
+
+EXPOSE 8000
+
+CMD [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000" ]
